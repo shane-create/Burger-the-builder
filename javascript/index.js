@@ -2,6 +2,20 @@
 var b = window.innerWidth;
 var h = window.innerHeight;
 
+/* Min score database */
+
+var dbScore = {
+    "data": []
+}
+
+if(!localStorage.getItem("scoreDB")){
+    localStorage.setItem("scoreDB", JSON.stringify(dbScore))
+}
+
+var db = JSON.parse(localStorage.getItem("scoreDB", JSON.stringify(dbScore) ))
+console.log(db)
+
+
 /* Dette her er alle mine elementer som jeg gør brug af. */
 var burgerTop = document.getElementById("burgerTop");
 var løg = document.getElementById("løg");
@@ -51,9 +65,9 @@ function tjekForCollide(rect1, rect2){
 
 function tjekForDist(rect1){
     var rect2 = burgerBund.getBoundingClientRect();
-    
-    var rect1X = (rect1.left + rect1.width)/2
-    var rect2X = (rect2.left + rect2.width)/2
+    console.log(rect1.left + rect1.width/2)
+    var rect1X = rect1.left + rect1.width/2
+    var rect2X = rect2.left + rect2.width/2
     var centerDist = Math.abs(rect1X - rect2X);
     alleCenterDist.push(centerDist)
     console.log(alleCenterDist)
@@ -101,10 +115,27 @@ function initializeBevægelse(element, hastighed, collideElement, callback = nul
     begyndFald(element, collideElement, sideTilSideInterval, callback)
 }
 
+function endGame(){
+    var min_værdi = Math.min(...alleCenterDist)
+    var max_værdi = Math.max(...alleCenterDist)
+    var total = 0;
+
+    for(let i = 0; i < alleCenterDist.length; i++){
+        var normaliseret_værdi = (alleCenterDist[i] - min_værdi) / (max_værdi - min_værdi)
+        var slutVærdi = 1 - normaliseret_værdi
+        total += slutVærdi
+    }
+
+    var regnetScore = total/6 * 100
+    db.data.push(regnetScore)
+
+    localStorage.setItem("scoreDB", JSON.stringify(db))
+}
+
 function begyndBurgertop(){
     burgerTop.style.display = "block";
     acceleration = 0;
-    initializeBevægelse(burgerTop, 5, løg)
+    initializeBevægelse(burgerTop, 5, løg, endGame)
 }
 
 function begyndLøg(){
@@ -122,20 +153,20 @@ function begyndMayo(){
 function begyndOst(){
     ost.style.display = "block";
     acceleration = 0;
-    initializeBevægelse(ost, 5, kød, begyndMayo)
+    initializeBevægelse(ost, 4, kød, begyndMayo)
 }
 
 function begyndKød(){
     kød.style.display = "block";
     acceleration = 0;
-    initializeBevægelse(kød, 4, tomater, begyndOst)
+    initializeBevægelse(kød, 3, tomater, begyndOst)
 }
 
 function begyndTomater(){
     tomater.style.display = "block";
     acceleration = 0;
-    initializeBevægelse(tomater, 3, salat, begyndKød)
+    initializeBevægelse(tomater, 2, salat, begyndKød)
 }
 
-initializeBevægelse(salat, 2, burgerBund, begyndTomater)
+initializeBevægelse(salat, 1, burgerBund, begyndTomater)
 
