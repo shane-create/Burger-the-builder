@@ -1,0 +1,52 @@
+#title{
+    width:34%;
+    position: absolute;
+    top:35%;
+    left: 50%;
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+}
+
+.Img{
+    width:100%;
+}
+
+#rulesButton{
+    width: 15%;
+    cursor: pointer;
+    position: absolute;
+    transform: rotate(5.44deg);
+    top:70%;
+    left:52%;
+}
+
+#playButton{
+    width: 15%;
+    cursor: pointer;
+    position: absolute;
+    top:67%;
+    left:33%;
+}
+
+#baggrundImg{
+    width: 100%;
+    height:350px;
+    position: absolute;
+    bottom:0%;
+    left:0%;
+}
+
+#ketchup{
+    width:22%;
+    transform: rotate(-0.1deg);
+    position: absolute;
+    left:10%;
+    top:40%;
+}
+
+#mayo{
+    width:25%;
+    position: absolute;
+    left:67%;
+    bottom:0%;
+}

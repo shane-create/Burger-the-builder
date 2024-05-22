@@ -5,18 +5,21 @@ var h = window.innerHeight;
 /* Min score database */
 
 var dbScore = {
-    "data": []
+    "data": [],
+    "nyestesScore":0,
 }
 
 if(!localStorage.getItem("scoreDB")){
     localStorage.setItem("scoreDB", JSON.stringify(dbScore))
 }
 
+//localStorage.removeItem("scoreDB")
+
 var db = JSON.parse(localStorage.getItem("scoreDB", JSON.stringify(dbScore) ))
 console.log(db)
 
-
 /* Dette her er alle mine elementer som jeg gør brug af. */
+var mand = document.getElementById("mand")
 var burgerTop = document.getElementById("burgerTop");
 var løg = document.getElementById("løg");
 var mayo = document.getElementById("mayo");
@@ -25,6 +28,8 @@ var kød = document.getElementById("kød");
 var tomater = document.getElementById("tomater");
 var salat = document.getElementById("salat");
 var burgerBund = document.getElementById("burgerBund");
+
+var scoreShow = document.getElementById("scoreNum")
 
 /* Her får jeg lavet en liste med alle de forskellige afstande fra de forskellige 
 burger elementers x centrum til x centrummet af min burger bund. */
@@ -126,44 +131,91 @@ function endGame(){
         total += slutVærdi
     }
 
-    var regnetScore = total/6 * 100
-    db.data.push(regnetScore)
+    var dato = new Date()
+    var å = dato.getUTCFullYear()
+    var m = dato.getUTCMonth() + 1
+    var d = dato.getUTCDate()
 
+    var regnetScore = total/6 * 100
+    var scoreObject = {
+        score: regnetScore,
+        år: å,
+        måned: m,
+        dag:d
+    }
+
+    db.data.push(scoreObject)
+    db.nyestesScore = scoreObject;
+    
     localStorage.setItem("scoreDB", JSON.stringify(db))
+
+
+    setTimeout(function(){mand.src = "../images/grib.png"}, 200)
+    setTimeout(function(){mand.src = "../images/gribTættere.png"}, 400)
+    setTimeout(function(){
+        mand.src = "../images/spis.png"
+        burgerBund.style.display = "none"
+        salat.style.display = "none"
+        tomater.style.display = "none"
+        kød.style.display = "none"
+        ost.style.display = "none"
+        mayo.style.display = "none"
+        løg.style.display = "none"
+        burgerTop.style.display = "none"
+    }, 600)
+    setTimeout(function(){mand.src = "../images/tørMund.png"}, 900)
+    setTimeout(function(){mand.src = "../images/givScore.png"}, 1500)
+    setTimeout(function(){
+        mand.src = "../images/visScore.png"
+        scoreShow.style.display = "block"
+        scoreShow.textContent = parseInt(regnetScore) + "%"
+    }, 1900)
+
+    setTimeout(function(){
+        window.location.href = "score.html"
+    },4000)
+
+    console.log(regnetScore)
 }
 
 function begyndBurgertop(){
     burgerTop.style.display = "block";
     acceleration = 0;
+    mand.src = "../images/superGlad.png"
     initializeBevægelse(burgerTop, 5, løg, endGame)
 }
 
 function begyndLøg(){
     løg.style.display = "block";
     acceleration = 0;
+    mand.src = "../images/shockGlad.png"
     initializeBevægelse(løg, 5, mayo, begyndBurgertop)
 }
 
 function begyndMayo(){
     mayo.style.display = "block";
     acceleration = 0;
+    mand.src = "../images/fuldShock.png"
     initializeBevægelse(mayo, 5, ost, begyndLøg)
 }
 
 function begyndOst(){
     ost.style.display = "block";
     acceleration = 0;
+    mand.src = "../images/sur.png"
     initializeBevægelse(ost, 4, kød, begyndMayo)
 }
 
 function begyndKød(){
     kød.style.display = "block";
     acceleration = 0;
+    mand.src = "../images/irriteret.png"
     initializeBevægelse(kød, 3, tomater, begyndOst)
 }
 
 function begyndTomater(){
     tomater.style.display = "block";
+    mand.src = "../images/meh.png"
     acceleration = 0;
     initializeBevægelse(tomater, 2, salat, begyndKød)
 }
