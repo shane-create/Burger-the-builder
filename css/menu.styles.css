@@ -11,21 +11,36 @@
     width:100%;
 }
 
+#rulesButton .Img{
+    transform: rotate(5.44deg);
+}
+
 #rulesButton{
     width: 15%;
     cursor: pointer;
     position: absolute;
-    transform: rotate(5.44deg);
-    top:70%;
-    left:52%;
+    top:77%;
+    left:59%;
+    transform: translate(-50%, -50%);
+    transition: transform 0.3s ease, font-size 0.3s ease;
+}
+
+#rulesButton:hover, #rulesButton:focus {
+    transform: translate(-50%, -50%) scale(1.2) rotate(10deg);
 }
 
 #playButton{
     width: 15%;
     cursor: pointer;
     position: absolute;
-    top:67%;
-    left:33%;
+    top:76%;
+    left:41%;
+    transform: translate(-50%, -50%);
+    transition: transform 0.3s ease, font-size 0.3s ease;
+}
+
+#playButton:hover, #playButton:focus {
+    transform: translate(-50%, -50%) scale(1.2) rotate(10deg);
 }
 
 #baggrundImg{

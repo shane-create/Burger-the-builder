@@ -1,13 +1,16 @@
 /* Her får jeg mit vindues højde såvel som bredde. */
 var b = window.innerWidth;
 var h = window.innerHeight;
+const max_afvigelse = b - 2 * (b / 5); 
+const halfRange = max_afvigelse / 2; 
 
-/* Min score database */
-
+/* Struktur af score database */
 var dbScore = {
     "data": [],
     "nyestesScore":0,
 }
+
+/* Hvis scoreDB ikke eksisterer på localstorage så lav det: */
 
 if(!localStorage.getItem("scoreDB")){
     localStorage.setItem("scoreDB", JSON.stringify(dbScore))
@@ -15,7 +18,7 @@ if(!localStorage.getItem("scoreDB")){
 
 //localStorage.removeItem("scoreDB")
 
-var db = JSON.parse(localStorage.getItem("scoreDB", JSON.stringify(dbScore) ))
+var db = JSON.parse(localStorage.getItem("scoreDB"))
 console.log(db)
 
 /* Dette her er alle mine elementer som jeg gør brug af. */
@@ -42,6 +45,7 @@ var intervalTid = 10;
 acceleration de starter ud med. */
 var gravity = 0.1
 var acceleration = 0;
+
 
 /* Her er funktionen der bevæger mine elementer fra højre til ventre side. */
 function sideTilSide(element, hastighed) {
@@ -74,8 +78,8 @@ function tjekForDist(rect1){
     var rect1X = rect1.left + rect1.width/2
     var rect2X = rect2.left + rect2.width/2
     var centerDist = Math.abs(rect1X - rect2X);
-    alleCenterDist.push(centerDist)
-    console.log(alleCenterDist)
+    var normalizedCenterDist = centerDist/halfRange
+    alleCenterDist.push(normalizedCenterDist)
 }
 
 function fald(element1, element2, faldInterval, callback = null) {
@@ -121,14 +125,13 @@ function initializeBevægelse(element, hastighed, collideElement, callback = nul
 }
 
 function endGame(){
-    var min_værdi = Math.min(...alleCenterDist)
-    var max_værdi = Math.max(...alleCenterDist)
     var total = 0;
 
     for(let i = 0; i < alleCenterDist.length; i++){
-        var normaliseret_værdi = (alleCenterDist[i] - min_værdi) / (max_værdi - min_værdi)
-        var slutVærdi = 1 - normaliseret_værdi
-        total += slutVærdi
+        let this_dist = alleCenterDist[i]
+        let procent_afvigelse = (Math.exp(-5 * this_dist))*100
+        console.log('procent afvigelse for denne dims ', procent_afvigelse)
+        total += procent_afvigelse
     }
 
     var dato = new Date()
@@ -136,7 +139,7 @@ function endGame(){
     var m = dato.getUTCMonth() + 1
     var d = dato.getUTCDate()
 
-    var regnetScore = total/6 * 100
+    var regnetScore = total/7
     var scoreObject = {
         score: regnetScore,
         år: å,
@@ -173,7 +176,7 @@ function endGame(){
 
     setTimeout(function(){
         window.location.href = "score.html"
-    },4000)
+    }, 3500)
 
     console.log(regnetScore)
 }

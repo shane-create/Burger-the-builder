@@ -3,32 +3,44 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Indie+Flower&family=Pacifico&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/score.styles.css">
     <title>Document</title>
 </head>
 <body>
     <div id="scoreBoard">
         <div id="scoreTitle">
+            <img class="Img" src="../images/scoreTitel.png"/>
 
         </div>
         <div class="scoreItem" id="first">
-            
+            <img id="gold" class="medal" src="../images/gold.png"/>
+            <h1 class="scores" id="firstScore"></h1>
+            <h1 class="date" id="firstDate"></h1>
         </div>
         <div class="scoreItem" id="second">
-
+            <img id="silver" class="medal" src="../images/silver.png"/>
+            <h1 class="scores" id="secondScore"></h1>
+            <h1 class="date" id="secondDate"></h1>
         </div>
         <div class="scoreItem" id="third">
-
+            <img id="bronze" class="medal" src="../images/bronze.png"/>
+            <h1 class="scores" id="thirdScore"></h1>
+            <h1 class="date" id="thirdDate"></h1>
         </div>
         <div class="scoreItem" id="fourth">
-
+            <h1 class="scores" id="fourthScore"></h1>
+            <h1 class="date" id="fourthDate"></h1>
         </div>
         <div class="scoreItem" id="fifth">
-
-        </div>
-        <div id="currentScore">
-
+            <h1 class="scores" id="fifthScore"></h1>
+            <h1 class="date" id="fifthDate"></h1>
         </div>
     </div>
+    <a id="replayButton" href="index.html"><img class="Img" src="../images/replay.png"></a>
+    <img id="mand" src="../images/mand.png"/>
     <script src="../javascript/score.js"></script>
 </body>
 </html>
