@@ -60,7 +60,7 @@
     top:89%;
     left:49%;
     transform: translate(-50%, -50%);
-    transition: transform 0.3s ease, font-size 0.3s ease;
+    transition: transform 0.3s ease;
 }
 
 #replayButton:hover, #replayButton:focus {
